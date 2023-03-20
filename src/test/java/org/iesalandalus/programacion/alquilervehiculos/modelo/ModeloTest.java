@@ -38,7 +38,7 @@ public class ModeloTest {
 	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_NULO = "ERROR: No se puede realizar un alquiler nulo.";
 	
 	@InjectMocks
-	private Modelo modelo = new ModeloCascada(FactoriaFuenteDatos.MEMORIA.crear());
+	private Modelo modeloCascada = new ModeloCascada(FactoriaFuenteDatos.MEMORIA.crear());
 	
 	@Mock
 	private static IFuenteDatos fuenteDatos;
@@ -93,7 +93,7 @@ public class ModeloTest {
 	
 	@Test
 	void comenzarLlamacreaClientescreaVehiculoscrearAlquileres() {
-		modelo.comenzar();
+		modeloCascada.comenzar();
 		verify(fuenteDatos).crearClientes();
 		verify(fuenteDatos).crearVehiculos();
 		verify(fuenteDatos).crearAlquileres();
@@ -101,21 +101,21 @@ public class ModeloTest {
 	
 	@Test
 	void terminarNoHaceNada() {
-		assertDoesNotThrow(() -> modelo.terminar());
+		assertDoesNotThrow(() -> modeloCascada.terminar());
 	}
 
 	@Test
 	void insertarClienteLlamaClientesInsertar() {
-		assertDoesNotThrow(() -> modelo.insertar(cliente));
+		assertDoesNotThrow(() -> modeloCascada.insertar(cliente));
 		assertDoesNotThrow(() -> verify(clientes).insertar(any(Cliente.class)));
-		assertNotSame(cliente, modelo.buscar(cliente));
+		assertNotSame(cliente, modeloCascada.buscar(cliente));
 	}
 
 	@Test
 	void insertarVehiculoLlamaVehiculosInsertar() {
-		assertDoesNotThrow(() -> modelo.insertar(turismo));
+		assertDoesNotThrow(() -> modeloCascada.insertar(turismo));
 		assertDoesNotThrow(() -> verify(vehiculos).insertar(any(Vehiculo.class)));
-		assertNotSame(turismo, modelo.buscar(turismo));
+		assertNotSame(turismo, modeloCascada.buscar(turismo));
 	}
 
 	@Test
@@ -123,61 +123,61 @@ public class ModeloTest {
 		InOrder orden = inOrder(clientes, vehiculos, alquileres);
 		when(clientes.buscar(cliente)).thenReturn(cliente);
 		when(vehiculos.buscar(turismo)).thenReturn(turismo);
-		assertDoesNotThrow(() -> modelo.insertar(alquiler));
+		assertDoesNotThrow(() -> modeloCascada.insertar(alquiler));
 		orden.verify(clientes).buscar(cliente);
 		orden.verify(vehiculos).buscar(turismo);
 		assertDoesNotThrow(() -> orden.verify(alquileres).insertar(any(Alquiler.class)));
-		assertNotSame(alquiler, modelo.buscar(alquiler));
+		assertNotSame(alquiler, modeloCascada.buscar(alquiler));
 	}
 	
 	@Test
 	void insertarAlquilerAlquilerNuloLanzaExcepcion() {
 		Alquiler alquilerNulo = null;
-		NullPointerException npe = assertThrows(NullPointerException.class, () -> modelo.insertar(alquilerNulo));
+		NullPointerException npe = assertThrows(NullPointerException.class, () -> modeloCascada.insertar(alquilerNulo));
 		assertEquals(npe.getMessage(), MENSAJE_ERROR_INSERTAR_ALQUILER_NULO);
 	}
 
 	@Test
 	void buscarClienteLlamaClientesBuscar() {
-		assertDoesNotThrow(() -> modelo.insertar(cliente));
-		Cliente clienteBuscado = modelo.buscar(cliente);
+		assertDoesNotThrow(() -> modeloCascada.insertar(cliente));
+		Cliente clienteBuscado = modeloCascada.buscar(cliente);
 		verify(clientes).buscar(cliente);
 		assertNotSame(cliente, clienteBuscado);
 	}
 
 	@Test
 	void buscarVehiculoLlamaVehiculosBuscar() {
-		assertDoesNotThrow(() -> modelo.insertar(turismo));
-		Vehiculo vehiculoBuscado = modelo.buscar(turismo);
+		assertDoesNotThrow(() -> modeloCascada.insertar(turismo));
+		Vehiculo vehiculoBuscado = modeloCascada.buscar(turismo);
 		verify(vehiculos).buscar(turismo);
 		assertNotSame(turismo, vehiculoBuscado);
 	}
 
 	@Test
 	void buscarAlquilerLlamaAlquileresBuscar() {
-		assertDoesNotThrow(() -> modelo.insertar(cliente));
+		assertDoesNotThrow(() -> modeloCascada.insertar(cliente));
 		when(clientes.buscar(cliente)).thenReturn(cliente);
 		when(vehiculos.buscar(turismo)).thenReturn(turismo);
-		Alquiler alquilerBuscado = modelo.buscar(alquiler);
+		Alquiler alquilerBuscado = modeloCascada.buscar(alquiler);
 		verify(alquileres).buscar(alquiler);
 		assertNotSame(alquiler, alquilerBuscado);
 	}
 
 	@Test
 	void modificarClienteLlamaClientesBuscarModificar() {
-		assertDoesNotThrow(() -> modelo.modificar(cliente, "Patricio Estrella", "950123456"));
+		assertDoesNotThrow(() -> modeloCascada.modificar(cliente, "Patricio Estrella", "950123456"));
 		assertDoesNotThrow(() -> verify(clientes).modificar(cliente, "Patricio Estrella", "950123456"));
 	}
 	
 	@Test
 	void devolverClienteLlamaAlquileresDevolverCliente() {
-		assertDoesNotThrow(() -> modelo.devolver(cliente, hoy));
+		assertDoesNotThrow(() -> modeloCascada.devolver(cliente, hoy));
 		assertDoesNotThrow(() -> verify(alquileres).devolver(cliente, hoy));
 	}
 	
 	@Test
 	void devolverVehiculoLlamaAlquileresDevolverVehiculo() {
-		assertDoesNotThrow(() -> modelo.devolver(turismo, hoy));
+		assertDoesNotThrow(() -> modeloCascada.devolver(turismo, hoy));
 		assertDoesNotThrow(() -> verify(alquileres).devolver(turismo, hoy));
 	}
 
@@ -185,7 +185,7 @@ public class ModeloTest {
 	void borrarClienteLlamaAlquileresGetPrestamosBorrarClientesBorrar() {
 		simularClienteConAlquileres();
 		InOrder orden = inOrder(clientes, alquileres);
-		assertDoesNotThrow(() -> modelo.borrar(cliente));
+		assertDoesNotThrow(() -> modeloCascada.borrar(cliente));
 		orden.verify(alquileres).get(cliente);
 		for (Alquiler alquiler : alquileres.get(cliente)) {
 			assertDoesNotThrow(() -> orden.verify(alquileres).borrar(alquiler));
@@ -206,7 +206,7 @@ public class ModeloTest {
 	void borrarVehiculoLlamaAlquileresGetPrestamosBorrarVehiculosBorrar() {
 		simularVehiculoConAlquileres();
 		InOrder orden = inOrder(vehiculos, alquileres);
-		assertDoesNotThrow(() -> modelo.borrar(turismo));
+		assertDoesNotThrow(() -> modeloCascada.borrar(turismo));
 		orden.verify(alquileres).get(turismo);
 		for (Alquiler alquiler : alquileres.get(turismo)) {
 			assertDoesNotThrow(() -> orden.verify(alquileres).borrar(alquiler));
@@ -226,7 +226,7 @@ public class ModeloTest {
 	@Test
 	void borrarAlquilerLllamaAlquileresBorrar() {
 		when(alquileres.buscar(alquiler)).thenReturn(alquiler);
-		assertDoesNotThrow(() -> modelo.borrar(alquiler));
+		assertDoesNotThrow(() -> modeloCascada.borrar(alquiler));
 		assertDoesNotThrow(() -> verify(alquileres).borrar(alquiler));
 	}
 	
@@ -235,7 +235,7 @@ public class ModeloTest {
 		List<Cliente> clientesDevueltos = new ArrayList<>();
 		clientesDevueltos.add(cliente);
 		when(clientes.get()).thenReturn(clientesDevueltos);
-		List<Cliente> clientesExistentes = modelo.getListaClientes();
+		List<Cliente> clientesExistentes = modeloCascada.getListaClientes();
 		verify(clientes).get();
 		assertNotSame(cliente, clientesExistentes.get(0));
 	}
@@ -245,7 +245,7 @@ public class ModeloTest {
 		List<Vehiculo> vehiculosDevueltos = new ArrayList<>();
 		vehiculosDevueltos.add(turismo);
 		when(vehiculos.get()).thenReturn(vehiculosDevueltos);
-		List<Vehiculo> vehiculosExistentes = modelo.getListaVehiculos();
+		List<Vehiculo> vehiculosExistentes = modeloCascada.getListaVehiculos();
 		verify(vehiculos).get();
 		assertNotSame(turismo, vehiculosExistentes.get(0));
 	}
@@ -255,7 +255,7 @@ public class ModeloTest {
 		List<Alquiler> alquileresDevueltos = new ArrayList<>();
 		alquileresDevueltos.add(alquiler);
 		when(alquileres.get()).thenReturn(alquileresDevueltos);
-		List<Alquiler> alquileresExistentes = modelo.getListaAlquileres();
+		List<Alquiler> alquileresExistentes = modeloCascada.getListaAlquileres();
 		verify(alquileres).get();
 		assertNotSame(alquiler, alquileresExistentes.get(0));
 	}
@@ -265,7 +265,7 @@ public class ModeloTest {
 		List<Alquiler> alquileresDevueltos = new ArrayList<>();
 		alquileresDevueltos.add(alquiler);
 		when(alquileres.get(cliente)).thenReturn(alquileresDevueltos);
-		List<Alquiler> alquileresCliente = modelo.getListaAlquileres(cliente);
+		List<Alquiler> alquileresCliente = modeloCascada.getListaAlquileres(cliente);
 		verify(alquileres).get(cliente);
 		assertNotSame(alquiler, alquileresCliente.get(0));
 	}
@@ -275,7 +275,7 @@ public class ModeloTest {
 		List<Alquiler> alquileresDevueltos = new ArrayList<>();
 		alquileresDevueltos.add(alquiler);
 		when(alquileres.get(turismo)).thenReturn(alquileresDevueltos);
-		List<Alquiler> alquileresTurismo = modelo.getListaAlquileres(turismo);
+		List<Alquiler> alquileresTurismo = modeloCascada.getListaAlquileres(turismo);
 		verify(alquileres).get(turismo);
 		assertNotSame(alquiler, alquileresTurismo.get(0));
 	}
