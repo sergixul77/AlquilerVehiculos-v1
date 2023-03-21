@@ -9,13 +9,16 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.Modelo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class Controlador {
-
+	
 
 	private Modelo modelo;
 
+	private Vista vista;
+	
 	public Controlador(Modelo modelo, Vista vista) {
 		if (modelo == null) {
 			throw new NullPointerException("ERROR: no puedes crear un modelo nulo");
@@ -69,9 +72,9 @@ public class Controlador {
 
 	}
 
-	public Turismo buscar(Turismo turismo) {
+	public Vehiculo buscar(Vehiculo vehiculo) {
 
-		return modelo.buscar(turismo);
+		return modelo.buscar(vehiculo);
 
 	}
 
@@ -91,9 +94,15 @@ public class Controlador {
 
 	/* Devuelve el alquiler con la fecha de devolucion */
 
-	public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 
-		modelo.devolver(alquiler, fechaDevolucion);
+		modelo.devolver(cliente, fechaDevolucion);
+
+	}
+	
+	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+
+		modelo.devolver(vehiculo, fechaDevolucion);
 
 	}
 
@@ -117,26 +126,26 @@ public class Controlador {
 	}
 
 	public List<Cliente> getClientes() {
-		return modelo.getClientes();
+		return modelo.getListaClientes();
 	}
 
-	public List<Turismo> getTurismos() {
-		return modelo.getTurismos();
+	public List<Vehiculo> getVehiculos() {
+		return modelo.getListaVehiculos();
 	}
 
 	public List<Alquiler> getAlquileres() {
 
-		return modelo.getAlquileres();
+		return modelo.getListaAlquileres();
 	}
 
 	public List<Alquiler> getAlquileres(Cliente cliente) {
 
-		return modelo.getAlquileres(cliente);
+		return modelo.getListaAlquileres(cliente);
 
 	}
 
-	public List<Alquiler> getAlquileres(Turismo turismo) {
-		return modelo.getAlquileres(turismo);
+	public List<Alquiler> getAlquileres(Vehiculo vehiculo) {
+		return modelo.getListaAlquileres(vehiculo);
 
 	}
 

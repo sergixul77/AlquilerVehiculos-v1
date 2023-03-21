@@ -98,53 +98,53 @@ public class ModeloCascada extends Modelo {
 
 	@Override
 	public List<Cliente> getListaClientes() {
-		List<Cliente> listaCliente = new ArrayList<>();
-		for (Cliente cadaCliente : getClientes().get()) {
-			Cliente cliente = new Cliente(cadaCliente);
-			listaCliente.add(cliente);
+		List<Cliente> listaDeClientes = new ArrayList<>();
+		for (Cliente unCliente : getClientes().get()) {
+			Cliente cliente = new Cliente(unCliente);
+			listaDeClientes.add(cliente);
 		}
-		return listaCliente;
+		return listaDeClientes;
 	}
 
 	@Override
 	public List<Vehiculo> getListaVehiculos() {
-		List<Vehiculo> listaVehiculos = new ArrayList<>();
-		for (Vehiculo cadaVehiculo : getVehiculos().get()) {
-			Vehiculo vehiculo = Vehiculo.copiar(cadaVehiculo);
-			listaVehiculos.add(vehiculo);
+		List<Vehiculo> listaDeVehiculos = new ArrayList<>();
+		for (Vehiculo unVehiculo : getVehiculos().get()) {
+			Vehiculo vehiculo = Vehiculo.copiar(unVehiculo);
+			listaDeVehiculos.add(vehiculo);
 		}
 
-		return listaVehiculos;
+		return listaDeVehiculos;
 	}
 
 	@Override
 	public List<Alquiler> getListaAlquileres() {
-		List<Alquiler> listaAlquileres = new ArrayList<>();
-		for (Alquiler cadaAlquiler : getAlquileres().get()) {
-			Alquiler alquiler = new Alquiler(cadaAlquiler);
-			listaAlquileres.add(alquiler);
+		List<Alquiler> listaDeAlquileres = new ArrayList<>();
+		for (Alquiler unAlquiler : getAlquileres().get()) {
+			Alquiler alquiler = new Alquiler(unAlquiler);
+			listaDeAlquileres.add(alquiler);
 		}
-		return listaAlquileres;
+		return listaDeAlquileres;
 	}
 
 	@Override
 	public List<Alquiler> getListaAlquileres(Cliente cliente) {
-		List<Alquiler> listaAlquiler = new ArrayList<>();
-		for (Alquiler cadaAlquiler : getAlquileres().get(cliente)) {
-			Alquiler alquiler = new Alquiler(cadaAlquiler);
-			listaAlquiler.add(alquiler);
+		List<Alquiler> listaDeAlquiler = new ArrayList<>();
+		for (Alquiler unAlquiler : getAlquileres().get(cliente)) {
+			Alquiler alquiler = new Alquiler(unAlquiler);
+			listaDeAlquiler.add(alquiler);
 		}
-		return listaAlquiler;
+		return listaDeAlquiler;
 	}
 
 	@Override
 	public List<Alquiler> getListaAlquileres(Vehiculo vehiculo) {
-		List<Alquiler> listaAlquiler = new ArrayList<>();
-		for (Alquiler cadaAlquiler : getAlquileres().get(vehiculo)) {
-			Alquiler alquiler = new Alquiler(cadaAlquiler);
-			listaAlquiler.add(alquiler);
+		List<Alquiler> listaDeAlquiler = new ArrayList<>();
+		for (Alquiler unAlquiler : getAlquileres().get(vehiculo)) {
+			Alquiler alquiler = new Alquiler(unAlquiler);
+			listaDeAlquiler.add(alquiler);
 		}
-		return listaAlquiler;
+		return listaDeAlquiler;
 	}
 
 }

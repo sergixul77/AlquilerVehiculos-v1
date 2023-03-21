@@ -30,9 +30,9 @@ public class VistaTexto {
 		Accion eligeOpcion;
 
 		do {
-			Consola.mostrarMenu();
-			eligeOpcion = Consola.elegirOpcion();// este metodo ya lee la opcion y la ejecutara
-			ejecutar(eligeOpcion);
+			Consola.mostrarMenuAcciones();
+			eligeOpcion = Consola.elegirAccion();// este metodo ya lee la opcion y la ejecutara
+			  Consola.elegirAccion(eligeOpcion)  ;
 		} while (eligeOpcion != Accion.SALIR); // si la opcion es diferente de la opcion salir va a seguir mostrando el
 												// menu, para poder seguir eligiendo opciones
 
