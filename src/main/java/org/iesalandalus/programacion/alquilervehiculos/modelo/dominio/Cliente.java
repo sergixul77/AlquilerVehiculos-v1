@@ -100,7 +100,7 @@ public class Cliente {
 	
 	public static Cliente getClienteConDni(String dni) {
 		
-		return new Cliente ("Sergio" , dni , "950224506");
+		return new Cliente("Sergio", dni, "950224506");
 		
 		
 	}

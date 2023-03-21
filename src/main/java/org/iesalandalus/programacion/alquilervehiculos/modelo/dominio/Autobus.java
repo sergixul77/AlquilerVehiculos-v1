@@ -7,18 +7,17 @@ public class Autobus extends Vehiculo {
 	private int plazas;
 
 	public Autobus(String marca, String modelo, int plazas, String matricula) {
-		
-		
+
 		super(marca, modelo, matricula);
 		setPlazas(plazas);
 
 	}
 
 	public Autobus(Autobus autobus) {
-		
+
 		super(autobus);
 		plazas = autobus.getPlazas();
-		
+
 		if (autobus == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
 		}
@@ -30,12 +29,11 @@ public class Autobus extends Vehiculo {
 	}
 
 	public void setPlazas(int plazas) {
-		
+
 		if (plazas < 7 || plazas > 100) {
 			throw new IllegalArgumentException("ERROR: Las plazas no son correctas.");
 		}
-		
-		
+
 		this.plazas = plazas;
 	}
 

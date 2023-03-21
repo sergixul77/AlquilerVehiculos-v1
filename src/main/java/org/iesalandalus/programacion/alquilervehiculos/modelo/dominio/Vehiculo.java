@@ -32,7 +32,7 @@ public abstract class Vehiculo {
 
 	public static Vehiculo getVehiculoConMatricula(String matricula) {
 
-		return new Turismo ("Toyota", "supra", 40, matricula);
+		return new Turismo("Toyota", "supra", 40, matricula);
 
 	}
 
@@ -88,11 +88,15 @@ public abstract class Vehiculo {
 	public static Vehiculo copiar(Vehiculo vehiculo) {
 
 		Vehiculo vehiculoCopiado = null;
-		if (vehiculo instanceof Turismo turismo) { // verifica si la variable vehiculo es una instancia de la clase Turismo y, si es cierto, crea una nueva variable llamada turismo que es del tipo Turismo
+		if (vehiculo instanceof Turismo turismo) { // verifica si la variable vehiculo es una instancia de la clase
+													// Turismo y, si es cierto, crea una nueva variable llamada turismo
+													// que es del tipo Turismo
 			vehiculoCopiado = new Turismo(turismo);// creo un nuevo Turismo
-		}if (vehiculo instanceof Autobus autobus) {
+		}
+		if (vehiculo instanceof Autobus autobus) {
 			vehiculoCopiado = new Autobus(autobus);
-		}if (vehiculo instanceof Furgoneta furgoneta) {
+		}
+		if (vehiculo instanceof Furgoneta furgoneta) {
 			vehiculoCopiado = new Furgoneta(furgoneta);
 		}
 

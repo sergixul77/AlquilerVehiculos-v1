@@ -136,40 +136,40 @@ public class Consola {
 
 	public static Alquiler leerAlquiler() {
 
-		return new Alquiler(leerClienteDni(), leerVehiculoMatricula(), leerFecha("Introduzca la fecha de alquiler: ")); 
+		return new Alquiler(leerClienteDni(), leerVehiculoMatricula(), leerFecha("Introduzca la fecha de alquiler: "));
 
 	}
-	
-	
-	
+
 	public static LocalDate leerMes() {
-		
-		 final String PATRON_MES = "Introduzca un mes en formato MM/yyyy: ";
-		 final String PATRON_FECHA = "MM/yyyy";
-		 return leerFecha(PATRON_MES, PATRON_FECHA);
-		
+
+		final String PATRON_MES = "Introduzca un mes en formato MM/yyyy: ";
+		final String PATRON_FECHA = "MM/yyyy";
+		return leerFecha(PATRON_MES, PATRON_FECHA);
+
 	}
-	
 
 	public static LocalDate leerFechaDevolucion() {
 
 		return leerFecha("Introduceme la fecha de devolución: ");
 	}
-	
-	
+
 	private static final void mostrarMenuTiposVehiculos () { 
 	
+		mostrarCabecera("Elige un tipo de vehiculo");
+		for (TipoVehiculo tipoDeVehiculo : TipoVehiculo.values()) {
+			System.out.println("%s %s", TipoVehiculo.values(),  );
+		}
 		
 	}
-	private static final  TipoVehiculo elegirTipoVehiculo () {
+
+	private static final TipoVehiculo elegirTipoVehiculo() {
 		
 		
-		
+
 	}
-	private static final  Vehiculo leerVehiculo (TipoVehiculo tipoVehiculo) {
-		
+
+	private static final Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
+
 	}
-	
-	
 
 }

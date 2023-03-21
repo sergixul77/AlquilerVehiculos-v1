@@ -1,29 +1,26 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Consola;
 import org.iesalandalus.programacion.alquilervehiculos.vista.texto.TipoVeihiculo;
 
 // version 1
 
-public class VistaTexto {
+public class VistaTexto extends Vista {
 
 	
 
-	/*public void setControlador(Controlador controlador) {
-		return controlador;
-		}*/
-	
-	
 	public VistaTexto() {
-		
-		
-		
+		super();
+		Accion.setVista(this);
+
 	}
 
 	public void comenzar() {
@@ -32,7 +29,8 @@ public class VistaTexto {
 		do {
 			Consola.mostrarMenuAcciones();
 			eligeOpcion = Consola.elegirAccion();// este metodo ya lee la opcion y la ejecutara
-			  Consola.elegirAccion(eligeOpcion)  ;
+			Consola.mostrarCabecera(eligeOpcion.toString());
+			eligeOpcion.ejecutar();
 		} while (eligeOpcion != Accion.SALIR); // si la opcion es diferente de la opcion salir va a seguir mostrando el
 												// menu, para poder seguir eligiendo opciones
 
@@ -42,53 +40,37 @@ public class VistaTexto {
 		System.out.println("Me despido de ti, desde alquiler Sergio");
 	}
 
-	
-	
-	
-	
 	public void insertarCliente() {
 		try {
-			Accion accion = Accion.INSERTAR_CLIENTE;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.insertar(Consola.leerCliente());
+			getControlador().insertar(Consola.leerCliente());
 			System.out.println("El cliente se ha insertado de forma  correcta.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public void insertarVehiculo() {
 		try {
-			Accion accion = Accion.INSERTAR_TURISMO;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.insertar(Consola.leerTurismo());
+			getControlador().insertar(Consola.leerVehiculo());
 			System.out.println("El turismo se ha insertado correctamente.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public void insertarAlquiler() {
 		try {
-			Accion accion = Accion.INSERTAR_ALQUILER;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.insertar(Consola.leerAlquiler());
+			getControlador().insertar(Consola.leerAlquiler());
 			System.out.println("El alquiler se ha insertado de forma correcta.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public void buscarCliente() {
 		try {
-			Accion accion = Accion.BUSCAR_CLIENTE;
-			Consola.mostrarCabecera(accion.toString());
-			/* controlador.buscar(Consola.leerClienteDni()); como lo tenia antes */
-			System.out.println(controlador.buscar(Consola.leerClienteDni()).toString());
-			// controlador.getClientes();
+
+			getControlador().buscar(Consola.leerClienteDni());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -96,9 +78,7 @@ public class VistaTexto {
 
 	public void buscarVehicuo() {
 		try {
-			Accion accion = Accion.BUSCAR_TURISMO;
-			Consola.mostrarCabecera(accion.toString());
-			System.out.println(controlador.buscar(Consola.leerTurismoMatricula()).toString());
+			getControlador().buscar(Consola.leerVehiculoMatricula());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -106,66 +86,51 @@ public class VistaTexto {
 
 	public void buscarAlquiler() {
 		try {
-			Accion accion = Accion.BUSCAR_ALQUILER;
-			Consola.mostrarCabecera(accion.toString());
-			System.out.println(controlador.buscar(Consola.leerAlquiler()).toString());
+			getControlador().buscar(Consola.leerAlquiler());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	
-	
 	public void modificarCliente() {
 		try {
-			Accion accion = Accion.MODIFICAR_CLIENTE;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.modificar(Consola.leerClienteDni(), Consola.leerNombre(), Consola.leerTelefono());
+			getControlador().modificar(Consola.leerClienteDni(), Consola.leerNombre(), Consola.leerTelefono());
 			System.out.println("El cliente se ha podidio modificar correctamente.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void devolverAlquilerCliente() {
 		try {
-			Accion accion = Accion.DEVOLVER_ALQUILER;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.devolver(Consola.leerAlquiler(), Consola.leerFechaDevolucion());
+			getControlador().devolver(Consola.leerClienteDni(), Consola.leerFechaDevolucion());
 			System.out.println("El alquiler se ha devuelto de forma correcta.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void devolverAlquilerVehiculo() {
 		try {
-			Accion accion = Accion.DEVOLVER_ALQUILER;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.devolver(Consola.leerAlquiler(), Consola.leerFechaDevolucion());
+			getControlador().devolver(Consola.leerVehiculoMatricula(), Consola.leerFechaDevolucion());
 			System.out.println("El alquiler se ha devuelto de forma correcta.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public void borrarCliente() {
 		try {
-			Accion accion = Accion.BORRAR_CLIENTE;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.borrar(Consola.leerClienteDni());
+			getControlador().borrar(Consola.leerClienteDni());
 			System.out.println("El cliente se ha podido borrar correctamente.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void borrarVehiculo() {
 		try {
-			Accion accion = Accion.BORRAR_TURISMO;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.borrar(Consola.leerTurismoMatricula());
+			getControlador().borrar(Consola.leerVehiculoMatricula());
 			System.out.println("El turismo  se ha podido borrar correctamente.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -174,20 +139,18 @@ public class VistaTexto {
 
 	public void borrarAlquiler() {
 		try {
-			Accion accion = Accion.BORRAR_ALQUILER;
-			Consola.mostrarCabecera(accion.toString());
-			controlador.borrar(Consola.leerAlquiler());
+			getControlador().borrar(Consola.leerAlquiler());
 			System.out.println("El alquiler se ha podido borrar correctamente.");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void listarClientes() {
 		try {
-			List<Cliente> listarClientesOrdenados = getControlador().getClientes();
-			listarClientesOrdenados.sort (Comparator.comparing (Cliente::getNombre) . thenComparing (Cliente::getDni)) :
-			for (Cliente cliente : controlador.getClientes()) {
+			List<Cliente> listaDeClientesOrdenada = getControlador().getClientes();
+			listaDeClientesOrdenada.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
+			for (Cliente cliente : listaDeClientesOrdenada) {
 				System.out.println(cliente.toString());
 			}
 
@@ -198,35 +161,34 @@ public class VistaTexto {
 
 	public void listarVehiculos() {
 		try {
-			Accion accion = Accion.LISTAR_TURISMOS;
-			Consola.mostrarCabecera(accion.toString());
-			for (Turismo turismo : controlador.getTurismos()) {
-				System.out.println(turismo.toString());
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
-	public void listarAlquileres() {
-		try {
-			Accion accion = Accion.LISTAR_TURISMOS;
-			Consola.mostrarCabecera(accion.toString());
-			for (Turismo turismo : controlador.getTurismos()) {
-				System.out.println(turismo.toString());
+			List<Vehiculo> listaDeVehiculosOrdenada = getControlador().getVehiculos();
+			listaDeVehiculosOrdenada.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo));
+			for (Vehiculo vehiculo : listaDeVehiculosOrdenada) {
+				System.out.println(vehiculo.toString());
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	
+	public void listarAlquileres() {
+		try {
+			List<Alquiler> listaDeAlquileresOrdenada = getControlador().getAlquileres();
+			listaDeAlquileresOrdenada
+					.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getFechaDevolucion));
+			for (Alquiler alquiler : listaDeAlquileresOrdenada) {
+				System.out.println(alquiler.toString());
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	public void listarAlquileresClientes() {
 		try {
 
-			Accion accion = Accion.LISTAR_ALQUILERES_CLIENTE;
-			Consola.mostrarCabecera(accion.toString());
-			for (Alquiler alquiler : controlador.getAlquileres(Consola.leerClienteDni())) {
+			List<Alquiler> listaDeAlquileresCliente = getControlador().getAlquileres(Consola.leerClienteDni());
+			for (Alquiler alquiler : listaDeAlquileresCliente) {
 				System.out.println(alquiler.toString());
 
 			}
@@ -239,9 +201,8 @@ public class VistaTexto {
 	public void listarAlquileresVehiculo() {
 		try {
 
-			Accion accion = Accion.LISTAR_ALQUILERES_TURISMO;
-			Consola.mostrarCabecera(accion.toString());
-			for (Alquiler alquiler : controlador.getAlquileres(Consola.leerTurismoMatricula())) {
+			List<Alquiler> listaDeAlquileresVehiculo = getControlador().getAlquileres(Consola.leerVehiculoMatricula());
+			for (Alquiler alquiler : listaDeAlquileresVehiculo) {
 				System.out.println(alquiler.toString());
 			}
 
@@ -249,17 +210,13 @@ public class VistaTexto {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
+
 	public void mostrarEstadisticasMensualesTipoVehiculo() {
-		
-	}
-	
-	
-	private Map<TipoVeihiculo, Integer>  inicializarEstadisticas() {
-		
+
 	}
 
-	
-	
+	private Map<TipoVeihiculo, Integer> inicializarEstadisticas() {
+
+	}
+
 }

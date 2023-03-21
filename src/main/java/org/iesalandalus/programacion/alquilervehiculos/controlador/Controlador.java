@@ -13,12 +13,11 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
 public class Controlador {
-	
 
 	private Modelo modelo;
 
 	private Vista vista;
-	
+
 	public Controlador(Modelo modelo, Vista vista) {
 		if (modelo == null) {
 			throw new NullPointerException("ERROR: no puedes crear un modelo nulo");
@@ -54,9 +53,9 @@ public class Controlador {
 		modelo.insertar(cliente);
 	}
 
-	public void insertar(Turismo turismo) throws OperationNotSupportedException {
+	public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
 
-		modelo.insertar(turismo);
+		modelo.insertar(vehiculo);
 
 	}
 
@@ -99,7 +98,7 @@ public class Controlador {
 		modelo.devolver(cliente, fechaDevolucion);
 
 	}
-	
+
 	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 
 		modelo.devolver(vehiculo, fechaDevolucion);
@@ -108,8 +107,8 @@ public class Controlador {
 
 	/* Borrar un cliente, un turismo y un alquiler */
 
-	public void borrar(Turismo turismo) throws OperationNotSupportedException {
-		modelo.borrar(turismo);
+	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
+		modelo.borrar(vehiculo);
 
 	}
 
