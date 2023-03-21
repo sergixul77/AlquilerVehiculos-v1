@@ -157,7 +157,7 @@ public class Consola {
 	
 		mostrarCabecera("Elige un tipo de vehiculo");
 		for (TipoVehiculo tipoDeVehiculo : TipoVehiculo.values()) {
-			System.out.println("%s %s", TipoVehiculo.values(),  );
+			System.out.printf("%s %s", tipoDeVehiculo.ordinal(), tipoDeVehiculo.toString()  );
 		}
 		
 	}
