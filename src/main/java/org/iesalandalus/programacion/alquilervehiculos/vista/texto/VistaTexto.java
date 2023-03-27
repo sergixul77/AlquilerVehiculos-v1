@@ -1,14 +1,14 @@
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Consola;
+import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 import org.iesalandalus.programacion.alquilervehiculos.vista.texto.TipoVeihiculo;
 
 // version 1
@@ -70,7 +70,8 @@ public class VistaTexto extends Vista {
 	public void buscarCliente() {
 		try {
 
-			getControlador().buscar(Consola.leerClienteDni());
+			System.out.println(getControlador().buscar(Consola.leerClienteDni()));
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -78,7 +79,7 @@ public class VistaTexto extends Vista {
 
 	public void buscarVehicuo() {
 		try {
-			getControlador().buscar(Consola.leerVehiculoMatricula());
+			System.out.println(getControlador().buscar(Consola.leerVehiculoMatricula()));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -86,7 +87,7 @@ public class VistaTexto extends Vista {
 
 	public void buscarAlquiler() {
 		try {
-			getControlador().buscar(Consola.leerAlquiler());
+			System.out.println(getControlador().buscar(Consola.leerAlquiler()));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -216,6 +217,8 @@ public class VistaTexto extends Vista {
 	}
 
 	private Map<TipoVeihiculo, Integer> inicializarEstadisticas() {
+		
+		Map<TipoVehiculo, Integer> mapaVehiculos = new TreeMap<TipoVehiculo,Integer>();
 
 	}
 

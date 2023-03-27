@@ -9,10 +9,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
-import org.iesalandalus.programacion.alquilervehiculos.vista.Accion;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
@@ -61,6 +62,11 @@ public class Consola {
 
 	private static LocalDate leerFecha(String mensaje, String patron) {
 
+		/*
+		 * recive un patron, una vez que leo la cadena con la fecha tengo que ver que el
+		 * patron sea igual que la fecha que le paso y tengo que poner un 01/
+		 */
+
 		LocalDate fecha;
 
 		try {
@@ -93,6 +99,26 @@ public class Consola {
 		// esta definida
 
 		return accion;
+
+	}
+
+	private static TipoVehiculo elegirTipoVehiculo() {
+
+		TipoVehiculo opcion = null;
+
+		do {
+
+			try {
+
+				opcion = TipoVehiculo.get(leerEntero("Introduce una opción: "));
+
+			} catch (Exception e) {
+				System.out.println("Error:" + e.getMessage());
+			}
+
+		} while (opcion == null);
+
+		return opcion;
 
 	}
 
@@ -153,23 +179,45 @@ public class Consola {
 		return leerFecha("Introduceme la fecha de devolución: ");
 	}
 
-	private static final void mostrarMenuTiposVehiculos () { 
-	
-		mostrarCabecera("Elige un tipo de vehiculo");
+	private static void mostrarMenuTiposVehiculos() {
+
+		mostrarCabecera("Tipos de vehiculos");
 		for (TipoVehiculo tipoDeVehiculo : TipoVehiculo.values()) {
-			System.out.printf("%s %s", tipoDeVehiculo.ordinal(), tipoDeVehiculo.toString()  );
+			System.out.printf("%s %s", tipoDeVehiculo.ordinal(), tipoDeVehiculo.toString());
 		}
-		
-	}
-
-	private static final TipoVehiculo elegirTipoVehiculo() {
-		
-		
 
 	}
 
-	private static final Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
+	private static Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
 
+		Vehiculo vehiculo = null;
+
+		String marca = leerCadena("Introduce la marca: ");
+		String modelo = leerCadena("Introduce el modelo: ");
+		String matricula = leerCadena("Introduce una matrícula: ");
+
+		switch (tipoVehiculo) {
+		case AUTOBUS:
+
+			vehiculo = new Autobus(marca, modelo, leerEntero("Introduce el número de plazas:"), matricula);
+
+			break;
+
+		case FURGONETA:
+
+			vehiculo = new Furgoneta(marca, modelo, leerEntero("Introduce el peso maximo permitido"),
+					leerEntero("Introduce el número de plazas"), matricula);
+
+			break;
+		case TURISMO:
+
+			vehiculo = new Turismo(marca, modelo, leerEntero("Introduce la cilindrada"), matricula);
+			break;
+
+		default:
+			break;
+		}
+		return vehiculo;
 	}
 
 }
